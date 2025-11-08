@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER 3D FORGE - Neural Model Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="new-features.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+</head>
+<body>
+    <!-- Animated Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline id="bgVideo">
+            <source src="background.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Animated Cyber City Background -->
+    <div class="cyber-city" id="cyberCity"></div>
+
+    <!-- Flying Lights (Vehicles) -->
+    <div class="flying-lights">
+        <div class="flying-light"></div>
+        <div class="flying-light"></div>
+        <div class="flying-light"></div>
+        <div class="flying-light"></div>
+        <div class="flying-light"></div>
+    </div>
+
+    <!-- Cyberpunk Grid Background -->
+    <div class="cyber-grid"></div>
+    <div class="cyber-particles"></div>
+
+    <!-- Glitch Effect Overlay -->
+    <div class="glitch-overlay"></div>
+
+    <!-- Neon Signs -->
+    <div class="neon-signs" id="neonSigns"></div>
+
+    <div class="container">
+        <!-- Music Control Button -->
+        <button id="musicControlBtn" class="music-control-btn" title="Toggle Music">
+            <span class="music-icon">🎵</span>
+            <span class="music-status">ON</span>
+        </button>
+
+        <!-- Header with Glitch Effect -->
+        <header class="cyber-header">
+            <h1 class="glitch-text" data-text="CYBER 3D FORGE">CYBER 3D FORGE</h1>
+            <p class="subtitle">NEURAL AI MODEL GENERATOR v2.077</p>
+            <div class="status-bar">
+                <span class="status-indicator"></span>
+                <span id="systemStatus">SYSTEM ONLINE</span>
+            </div>
+        </header>
+
+        <!-- API Key Configuration Panel -->
+        <section class="api-config-panel">
+            <div class="panel-header">
+                <h2>🔑 API CONFIGURATION</h2>
+                <button id="toggleApiPanel" class="cyber-btn-small">CONFIGURE</button>
+            </div>
+
+            <div id="apiConfigContent" class="api-config-content">
+                <!-- API Provider Selection -->
+                <div class="api-selector">
+                    <label>SELECT AI PROVIDER:</label>
+                    <div class="provider-tabs">
+                        <button class="provider-tab active" data-provider="meshy">
+                            <span class="provider-icon">🎨</span>
+                            MESHY AI
+                        </button>
+                        <button class="provider-tab" data-provider="tripo">
+                            <span class="provider-icon">⚡</span>
+                            TRIPO AI
+                        </button>
+                        <button class="provider-tab" data-provider="csm">
+                            <span class="provider-icon">🚀</span>
+                            CSM AI
+                        </button>
+                    </div>
+                </div>
+
+                <!-- API Key Input Fields -->
+                <div class="api-key-inputs">
+                    <!-- Meshy AI -->
+                    <div class="api-input-group active" data-provider="meshy">
+                        <label>MESHY AI API KEY:</label>
+                        <input type="password" id="meshyApiKey" class="cyber-input" placeholder="msy_...">
+                        <div class="api-info">
+                            <small>Get FREE key: <a href="https://www.meshy.ai/" target="_blank">meshy.ai</a></small>
+                            <small>Speed: 60-180s | Quality: ⭐⭐⭐⭐⭐</small>
+                        </div>
+                    </div>
+
+                    <!-- Tripo AI -->
+                    <div class="api-input-group" data-provider="tripo">
+                        <label>TRIPO AI API KEY:</label>
+                        <input type="password" id="tripoApiKey" class="cyber-input" placeholder="tsk_...">
+                        <div class="api-info">
+                            <small>Get FREE key: <a href="https://platform.tripo3d.ai/" target="_blank">tripo3d.ai</a></small>
+                            <small>Speed: 30-90s | Quality: ⭐⭐⭐⭐⭐ | Free: 24/month</small>
+                        </div>
+                    </div>
+
+                    <!-- CSM AI -->
+                    <div class="api-input-group" data-provider="csm">
+                        <label>CSM AI API KEY:</label>
+                        <input type="password" id="csmApiKey" class="cyber-input" placeholder="csm_...">
+                        <div class="api-info">
+                            <small>Get FREE key: <a href="https://huggingface.co/" target="_blank">huggingface.co</a></small>
+                            <small>Speed: 45-120s | Quality: ⭐⭐⭐⭐</small>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="saveApiConfig" class="cyber-btn">SAVE CONFIGURATION</button>
+            </div>
+        </section>
+
+        <!-- Main Generator Interface -->
+        <section class="generator-panel">
+            <div class="input-section">
+                <label for="promptInput">NEURAL PROMPT INPUT:</label>
+                <div class="input-wrapper">
+                    <input
+                        type="text"
+                        id="promptInput"
+                        class="cyber-input prompt-input"
+                        placeholder="red sports car, futuristic robot, cyberpunk character..."
+                        maxlength="500"
+                    >
+                    <span class="input-glow"></span>
+                </div>
+
+                <div class="prompt-suggestions">
+                    <span class="suggestion-label">QUICK PROMPTS:</span>
+                    <button class="suggestion-btn" data-prompt="cyberpunk sports car with neon lights">🚗 Cyber Car</button>
+                    <button class="suggestion-btn" data-prompt="futuristic robot warrior">🤖 Robot Warrior</button>
+                    <button class="suggestion-btn" data-prompt="holographic anime character">👾 Anime Character</button>
+                    <button class="suggestion-btn" data-prompt="neon cityscape building">🏙️ Cyber Building</button>
+                </div>
+            </div>
+
+            <button id="generateBtn" class="cyber-btn generate-btn">
+                <span class="btn-text">INITIALIZE GENERATION</span>
+                <span class="btn-glow"></span>
+            </button>
+
+            <!-- Status Display -->
+            <div id="statusDisplay" class="status-display">
+                <div class="status-content">
+                    <div class="loading-spinner"></div>
+                    <span id="statusText">Ready to generate...</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3D Viewer -->
+        <section class="viewer-panel">
+            <div class="viewer-header">
+                <h3>HOLOGRAPHIC VIEWER</h3>
+                <div class="viewer-controls">
+                    <button id="resetView" class="control-btn" title="Reset View">🔄</button>
+                    <button id="toggleWireframe" class="control-btn" title="Wireframe">📐</button>
+                    <button id="arPreview" class="control-btn ar-btn" title="AR Preview">📱 AR</button>
+                    <button id="downloadModel" class="control-btn" title="Download">💾</button>
+                    <button id="compareModels" class="control-btn" title="Compare Models">🔀</button>
+                </div>
+            </div>
+            <div id="viewer" class="viewer-container">
+                <div class="viewer-overlay">
+                    <div class="scan-lines"></div>
+                </div>
+            </div>
+
+            <!-- Model Editor Controls -->
+            <div class="model-editor" id="modelEditor">
+                <div class="editor-section">
+                    <h4>🎨 MODEL EDITOR</h4>
+                    <div class="editor-controls">
+                        <div class="control-group">
+                            <label>Scale: <span id="scaleValue">1.0</span>x</label>
+                            <input type="range" id="modelScale" min="0.5" max="3" step="0.1" value="1">
+                        </div>
+                        <div class="control-group">
+                            <label>Rotation X: <span id="rotXValue">0</span>°</label>
+                            <input type="range" id="modelRotX" min="0" max="360" step="1" value="0">
+                        </div>
+                        <div class="control-group">
+                            <label>Rotation Y: <span id="rotYValue">0</span>°</label>
+                            <input type="range" id="modelRotY" min="0" max="360" step="1" value="0">
+                        </div>
+                        <div class="control-group">
+                            <label>Rotation Z: <span id="rotZValue">0</span>°</label>
+                            <input type="range" id="modelRotZ" min="0" max="360" step="1" value="0">
+                        </div>
+                        <div class="control-group">
+                            <label>Color Tint:</label>
+                            <div class="color-picker-group">
+                                <input type="color" id="modelColor" value="#ffffff">
+                                <button id="resetColor" class="cyber-btn-small">Reset</button>
+                            </div>
+                        </div>
+                        <button id="applyEdits" class="cyber-btn">APPLY CHANGES</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="viewer-info">
+                <span id="viewerStatus">Awaiting neural data...</span>
+            </div>
+        </section>
+
+        <!-- Batch Generator -->
+        <section class="batch-generator-panel">
+            <div class="panel-header">
+                <h2>⚡ BATCH GENERATOR</h2>
+                <button id="toggleBatchGen" class="cyber-btn-small">EXPAND</button>
+            </div>
+            <div id="batchGenContent" class="batch-gen-content">
+                <div class="batch-input-section">
+                    <label>ENTER PROMPTS (one per line):</label>
+                    <textarea id="batchPrompts" class="cyber-textarea" rows="5" placeholder="cyberpunk robot&#10;futuristic car&#10;neon character&#10;sci-fi weapon"></textarea>
+
+                    <div class="batch-options">
+                        <div class="option-group">
+                            <label>
+                                <input type="checkbox" id="batchAutoDownload" checked>
+                                <span>Auto-download models</span>
+                            </label>
+                        </div>
+                        <div class="option-group">
+                            <label>Delay between generations (seconds):</label>
+                            <input type="number" id="batchDelay" min="5" max="60" value="10" class="cyber-input-small">
+                        </div>
+                    </div>
+
+                    <button id="startBatchGen" class="cyber-btn">🚀 START BATCH GENERATION</button>
+                    <button id="stopBatchGen" class="cyber-btn" style="display:none;">⏹️ STOP BATCH</button>
+                </div>
+
+                <div class="batch-progress" id="batchProgress" style="display:none;">
+                    <div class="progress-info">
+                        <span id="batchStatus">Processing...</span>
+                        <span id="batchCount">0/0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="batchProgressFill"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Prompt Enhancer -->
+        <section class="prompt-enhancer-panel">
+            <div class="panel-header">
+                <h2>🤖 AI PROMPT ENHANCER</h2>
+                <button id="toggleEnhancer" class="cyber-btn-small">EXPAND</button>
+            </div>
+            <div id="enhancerContent" class="enhancer-content">
+                <div class="enhancer-input">
+                    <label>YOUR SIMPLE PROMPT:</label>
+                    <input type="text" id="simplePrompt" class="cyber-input" placeholder="robot">
+
+                    <div class="enhancer-options">
+                        <label>STYLE:</label>
+                        <select id="enhancerStyle" class="cyber-select">
+                            <option value="cyberpunk">Cyberpunk</option>
+                            <option value="anime">Anime</option>
+                            <option value="realistic">Realistic</option>
+                            <option value="lowpoly">Low Poly</option>
+                            <option value="fantasy">Fantasy</option>
+                            <option value="scifi">Sci-Fi</option>
+                        </select>
+                    </div>
+
+                    <button id="enhancePrompt" class="cyber-btn">✨ ENHANCE PROMPT</button>
+                </div>
+
+                <div class="enhanced-output" id="enhancedOutput">
+                    <label>ENHANCED PROMPT:</label>
+                    <div class="enhanced-text" id="enhancedText">
+                        Your enhanced prompt will appear here...
+                    </div>
+                    <button id="useEnhanced" class="cyber-btn" style="display:none;">USE THIS PROMPT</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Panel -->
+        <section class="stats-panel">
+            <div class="stat-item">
+                <span class="stat-label">MODELS GENERATED:</span>
+                <span class="stat-value" id="modelCount">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">ACTIVE PROVIDER:</span>
+                <span class="stat-value" id="activeProvider">NOT SET</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">SYSTEM STATUS:</span>
+                <span class="stat-value status-ok" id="systemHealth">OPTIMAL</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">GENERATION TIME:</span>
+                <span class="stat-value" id="genTime">--</span>
+            </div>
+        </section>
+
+        <!-- Model Gallery -->
+        <section class="gallery-panel">
+            <div class="panel-header">
+                <h2>🎨 MODEL GALLERY</h2>
+                <button id="clearGallery" class="cyber-btn-small">CLEAR ALL</button>
+            </div>
+            <div id="modelGallery" class="gallery-grid">
+                <div class="gallery-placeholder">
+                    <div class="placeholder-icon">📦</div>
+                    <p>Generated models will appear here</p>
+                    <small>Create your first model to start building your gallery!</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Generation History -->
+        <section class="history-panel">
+            <div class="panel-header">
+                <h2>📜 GENERATION HISTORY</h2>
+                <button id="clearHistory" class="cyber-btn-small">CLEAR</button>
+            </div>
+            <div id="historyList" class="history-list">
+                <div class="history-placeholder">
+                    <p>No generation history yet</p>
+                    <small>Your recent generations will be tracked here</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Settings -->
+        <section class="settings-panel">
+            <div class="panel-header">
+                <h2>⚙️ ADVANCED SETTINGS</h2>
+                <button id="toggleSettings" class="cyber-btn-small">EXPAND</button>
+            </div>
+            <div id="settingsContent" class="settings-content">
+                <!-- Visual Effects Settings -->
+                <div class="settings-group">
+                    <h3>VISUAL EFFECTS</h3>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="enableParticles" checked>
+                            <span>Enable Particles</span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="enableCity" checked>
+                            <span>Enable Cyber City</span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="enableFlying" checked>
+                            <span>Enable Flying Lights</span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="enableVideo" checked>
+                            <span>Enable Video Background</span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="enableScanLines" checked>
+                            <span>Enable Scan Lines</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Performance Settings -->
+                <div class="settings-group">
+                    <h3>PERFORMANCE</h3>
+                    <div class="setting-item">
+                        <label for="animSpeed">Animation Speed:</label>
+                        <input type="range" id="animSpeed" min="0.5" max="2" step="0.1" value="1">
+                        <span id="animSpeedValue">1.0x</span>
+                    </div>
+                    <div class="setting-item">
+                        <label for="videoOpacity">Video Opacity:</label>
+                        <input type="range" id="videoOpacity" min="0" max="100" step="5" value="40">
+                        <span id="videoOpacityValue">40%</span>
+                    </div>
+                </div>
+
+                <!-- Theme Settings -->
+                <div class="settings-group">
+                    <h3>THEME</h3>
+                    <div class="setting-item">
+                        <label>Primary Color:</label>
+                        <div class="color-presets">
+                            <button class="color-preset active" data-color="cyan" style="background: #00f5ff"></button>
+                            <button class="color-preset" data-color="pink" style="background: #ff006e"></button>
+                            <button class="color-preset" data-color="purple" style="background: #8338ec"></button>
+                            <button class="color-preset" data-color="green" style="background: #06ffa5"></button>
+                            <button class="color-preset" data-color="yellow" style="background: #ffbe0b"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="resetSettings" class="cyber-btn">RESET TO DEFAULTS</button>
+            </div>
+        </section>
+
+        <!-- Quick Actions Menu -->
+        <div class="quick-actions">
+            <button class="quick-action-btn" id="quickGenerate" title="Quick Generate">⚡</button>
+            <button class="quick-action-btn" id="quickSettings" title="Settings">⚙️</button>
+            <button class="quick-action-btn" id="quickGallery" title="Gallery">🎨</button>
+            <button class="quick-action-btn" id="quickHistory" title="History">📜</button>
+            <button class="quick-action-btn" id="scrollToTop" title="Scroll to Top">⬆️</button>
+        </div>
+
+        <!-- Background Music Player -->
+        <div class="music-player">
+            <button class="music-toggle" id="musicToggle" title="Toggle Music">
+                🎵
+            </button>
+            <div class="music-controls" id="musicControls">
+                <div class="music-info">
+                    <div class="music-title">CYBERPUNK MUSIC</div>
+                    <div class="music-artist">Lofi Beats</div>
+                </div>
+                <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="30">
+                <span id="volumeValue">30%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- YouTube Player Container -->
+    <div id="ytplayer"></div>
+
+    <!-- Load YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- Load Three.js and dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/MTLLoader.js"></script>
+
+    <!-- Load application scripts -->
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+    <script src="new-features.js"></script>
+</body>
+</html>

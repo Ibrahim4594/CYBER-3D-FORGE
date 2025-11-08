@@ -1,0 +1,7 @@
+# Exclude large files
+*.pt
+*.mp4
+*.pyc
+__pycache__/
+pro-api/generated_models/
+
